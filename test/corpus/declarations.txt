@@ -371,13 +371,19 @@ a-property: calc(5px + var(--a-variable));
 Variables
 =================================
 
-$font-stack: Helvetica, sans-serif;
+@font-stack: Helvetica, sans-serif;
+@link-color: #428bca;
+@link-color-hover:  darken(@link-color, 10%);
 
 a {
-  $primary-color: red;
+  @primary-color: red;
 
-  color: $primary-color;
-  font: 100% $font-stack;
+  color: @primary-color;
+  font: 100% @font-stack;
+
+  &:hover {
+    color: @link-color-hover;
+  }
 }
 
 ---
@@ -387,6 +393,17 @@ a {
     (property_name)
     (plain_value)
     (plain_value))
+  (declaration
+    (property_name)
+    (color_value))
+  (declaration
+    (property_name)
+    (call_expression
+      (function_name)
+      (arguments
+        (variable)
+        (integer_value
+          (unit)))))
   (rule_set
     (selectors
       (tag_name))
@@ -401,14 +418,55 @@ a {
         (property_name)
         (integer_value
           (unit))
-        (variable)))))
+        (variable))
+      (rule_set
+        (selectors
+          (pseudo_class_selector
+            (nesting_selector)
+            (class_name)))
+        (block
+          (declaration
+            (property_name)
+            (variable)))))))
+
+=================================
+Variable Interpolation
+=================================
+@my-selector: banner;
+
+.@{my-selector} {
+  font-weight: bold;
+}
+---
+(stylesheet
+  (declaration
+    (property_name)
+    (plain_value))
+  (rule_set
+    (selectors
+      (class_selector
+        (class_name
+          (interpolation
+            (plain_value)))))
+    (block
+      (declaration
+        (property_name)
+        (plain_value)))))
 
 =================================
 Mixins with no arguments
 =================================
 
-@mixin red {
+.a, #b {
   color: red;
+}
+.mixin-class {
+  .a();
+  .a;    // currently works, but deprecated; don't use
+  .a (); // white-space before parentheses is also deprecated
+}
+.mixin-id {
+  #b();
 }
 
 ---
@@ -425,8 +483,15 @@ Mixins with no arguments
 Mixins with arguments
 =================================
 
-@mixin replace-text($image, $color: red) {
-  text-align: left;
+.my-mixin {
+  color: black;
+}
+.my-other-mixin() {
+  background: white;
+}
+.class {
+  .my-mixin();
+  .my-other-mixin();
 }
 
 ---
@@ -501,26 +566,6 @@ Mixins with at-root
           (at_rule
             (at_keyword)))))))
 
-=================================
-Placeholders
-=================================
-
-%bar {
-  width: 100%;
-}
-
----
-
-(stylesheet
-  (rule_set
-    (selectors
-      (placeholder
-        (identifier)))
-    (block
-      (declaration
-        (property_name)
-        (integer_value
-          (unit))))))
 
 =============================================
 Spaces after colons in property declarations

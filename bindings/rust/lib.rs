@@ -1,4 +1,4 @@
-//! This crate provides SCSS language support for the [tree-sitter][] parsing library.
+//! This crate provides LESS language support for the [tree-sitter][] parsing library.
 //!
 //! Typically, you will use the [language][language func] function to add this language to a
 //! tree-sitter [Parser][], and then use the parser to parse some code:
@@ -8,7 +8,7 @@
 //! $blue: #056ef0;
 //! "#;
 //! let mut parser = tree_sitter::Parser::new();
-//! parser.set_language(&tree_sitter_scss::language()).expect("Error loading SCSS grammar");
+//! parser.set_language(&tree_sitter_less::language()).expect("Error loading LESS grammar");
 //! let tree = parser.parse(code, None).unwrap();
 //! assert!(!tree.root_node().has_error());
 //! ```
@@ -21,14 +21,14 @@
 use tree_sitter::Language;
 
 extern "C" {
-    fn tree_sitter_scss() -> Language;
+    fn tree_sitter_less() -> Language;
 }
 
 /// Get the tree-sitter [Language][] for this grammar.
 ///
 /// [Language]: https://docs.rs/tree-sitter/*/tree_sitter/struct.Language.html
 pub fn language() -> Language {
-    unsafe { tree_sitter_scss() }
+    unsafe { tree_sitter_less() }
 }
 
 /// The content of the [`node-types.json`][] file for this grammar.
@@ -49,6 +49,6 @@ mod tests {
         let mut parser = tree_sitter::Parser::new();
         parser
             .set_language(&super::language())
-            .expect("Error loading SCSS grammar");
+            .expect("Error loading LESS grammar");
     }
 }

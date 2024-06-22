@@ -1,6 +1,6 @@
 VERSION := 1.0.0
 
-LANGUAGE_NAME := tree-sitter-scss
+LANGUAGE_NAME := tree-sitter-less
 
 # repository
 SRC_DIR := src

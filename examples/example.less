@@ -1,0 +1,35 @@
+// Variables
+@link-color:        #428bca;
+@link-color-hover:  darken(@link-color, 10%);
+
+a,
+.link {
+  color: @link-color;
+}
+a:hover {
+  color: @link-color-hover;
+}
+.widget {
+  color: #fff;
+  background: @link-color;
+}
+
+// Variable Interpolation
+
+// Selectors
+@my-selector: banner;
+
+.@{my-selector} {
+  font-weight: bold;
+  line-height: 40px;
+  margin: 0 auto;
+}
+
+// Urls
+
+@images: "../img";
+
+body {
+  color: #444;
+  background: url("@{images}/white-sand.png");
+}

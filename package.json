@@ -1,17 +1,17 @@
 {
-  "name": "tree-sitter-scss",
+  "name": "tree-sitter-less",
   "version": "1.0.0",
-  "description": "SCSS grammar for tree-sitter",
-  "repository": "github:tree-sitter-grammars/tree-sitter-scss",
+  "description": "LESS grammar for tree-sitter",
+  "repository": "github:jimliang/tree-sitter-less",
   "license": "MIT",
-  "author": "Amaan Qureshi <amaanq12@gmail.com>",
+  "author": "jimliang <769925821@qq.com>",
   "main": "bindings/node",
   "types": "bindings/node",
   "keywords": [
     "incremental",
     "parsing",
     "tree-sitter",
-    "scss"
+    "less"
   ],
   "files": [
     "grammar.js",
@@ -51,11 +51,11 @@
   },
   "tree-sitter": [
     {
-      "scope": "source.scss",
+      "scope": "source.less",
       "file-types": [
-        "scss"
+        "less"
       ],
-      "injection-regex": "^scss$",
+      "injection-regex": "^less$",
       "highlights": "queries/highlights.scm"
     }
   ],

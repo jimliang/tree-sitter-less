@@ -1,4 +1,4 @@
-module github.com/tree-sitter-grammars/tree-sitter-scss
+module github.com/jimliang/tree-sitter-less
 
 go 1.22
 

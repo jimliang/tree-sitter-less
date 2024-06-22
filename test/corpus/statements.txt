@@ -1,3 +1,4 @@
+
 ==============================
 Import statements
 ==============================
@@ -33,6 +34,23 @@ Import statements
   (import_statement
     (string_value)
     (keyword_query)))
+
+==============================
+Import statements Options
+==============================
+@import (css) "foo.less";
+@import (optional, reference) "foo.less";
+---
+(stylesheet
+  (import_statement
+    (parenthesized_value
+      (plain_value))
+    (string_value))
+  (import_statement
+    (list_value
+      (plain_value)
+      (plain_value))
+    (string_value)))
 
 ==============================
 Namespace statements
@@ -339,83 +357,6 @@ Forward statements
   (forward_statement
     (string_value)))
 
-==============================
-Include statements
-==============================
-
-.foo {
-  @include bar;
-  @include transform(50px, $float: left);
-}
-
----
-
-(stylesheet
-  (rule_set
-    (selectors
-      (class_selector
-        (class_name)))
-    (block
-      (include_statement
-        (identifier))
-      (include_statement
-        (identifier)
-        (arguments
-          (argument
-            (integer_value
-              (unit)))
-          (argument
-            (variable)
-            (plain_value)))))))
-
-==============================
-Extend statements
-==============================
-
-.foo {
-  @extend red;
-  .bar {
-    @extend blue;
-    @extend .green;
-  }
-}
-
----
-
-(stylesheet
-  (rule_set
-    (selectors
-      (class_selector
-        (class_name)))
-    (block
-      (extend_statement
-        (plain_value))
-      (rule_set
-        (selectors
-          (class_selector
-            (class_name)))
-        (block
-          (extend_statement
-            (plain_value))
-          (extend_statement
-            (class_selector
-              (class_name))))))))
-
-==============================
-Apply statements
-==============================
-
-@apply fill-red-50 border-black col-span-1;
-
----
-
-(stylesheet
-  (postcss_statement
-    (at_keyword)
-    (plain_value)
-    (plain_value)
-    (plain_value)))
-
 =================================
 Operators
 =================================
@@ -449,10 +390,12 @@ article[role="main"] {
 Interpolation
 =================================
 
-.icon-#{$name} {
-  position: absolute;
-  #{$top-or-bottom}: 0;
+
+@variable: .bucket;
+@{variable} {
+  color: blue;
 }
+
 
 ---
 
@@ -474,305 +417,77 @@ Interpolation
             (variable)))
         (integer_value)))))
 
-=================================
-If statements
-=================================
-
-@mixin avatar($size, $circle: false) {
-  width: $size;
-  height: $size;
-
-  @if $circle {
-    border-radius: $size / 2;
-  }
-}
-
----
-
-(stylesheet
-  (mixin_statement
-    (identifier)
-    (parameters
-      (parameter
-        (variable))
-      (parameter
-        (variable)
-        (plain_value)))
-    (block
-      (declaration
-        (property_name)
-        (variable))
-      (declaration
-        (property_name)
-        (variable))
-      (if_statement
-        (variable)
-        (block
-          (declaration
-            (property_name)
-            (binary_expression
-              (variable)
-              (integer_value))))))))
-
-=================================
-Else statements
-=================================
-
-@mixin theme-colors($light-theme: true) {
-  @if $light-theme {
-    color: $light-text;
-  } @else {
-    color: $dark-text;
-  }
-}
-
----
-
-(stylesheet
-  (mixin_statement
-    (identifier)
-    (parameters
-      (parameter
-        (variable)
-        (plain_value)))
-    (block
-      (if_statement
-        (variable)
-        (block
-          (declaration
-            (property_name)
-            (variable)))
-        (else_clause
-          (block
-            (declaration
-              (property_name)
-              (variable))))))))
-
-=================================
-Else if statements
-=================================
-
-@mixin triangle($direction) {
-  @if $direction == up {
-    border-bottom-color: $color;
-  } @else if $direction == right {
-    border-left-color: $color;
-  } @else if $direction == down {
-    border-top-color: $color;
-  } @else {
-    border-right-color: $color;
-  }
-}
-
----
-
-(stylesheet
-  (mixin_statement
-    (identifier)
-    (parameters
-      (parameter
-        (variable)))
-    (block
-      (if_statement
-        (binary_expression
-          (variable)
-          (plain_value))
-        (block
-          (declaration
-            (property_name)
-            (variable)))
-        (else_if_clause
-          (binary_expression
-            (variable)
-            (plain_value))
-          (block
-            (declaration
-              (property_name)
-              (variable))))
-        (else_if_clause
-          (binary_expression
-            (variable)
-            (plain_value))
-          (block
-            (declaration
-              (property_name)
-              (variable))))
-        (else_clause
-          (block
-            (declaration
-              (property_name)
-              (variable))))))))
-
-=================================
-Each statements
-=================================
-
-@each $size in $sizes {
-  .icon-#{$size} {
-    font-size: $size;
-  }
-}
-
----
-
-(stylesheet
-  (each_statement
-    (variable)
-    (variable)
-    (block
-      (rule_set
-        (selectors
-          (class_selector
-            (class_name
-              (identifier)
-              (interpolation
-                (variable)))))
-        (block
-          (declaration
-            (property_name)
-            (variable)))))))
-
-=================================
-For statements
-=================================
-
-@for $i from 1 through 3 {
-  background-color: lighten($base-color, $i * 5%);
-}
-
----
-
-(stylesheet
-  (for_statement
-    (variable)
-    (integer_value)
-    (integer_value)
-    (block
-      (declaration
-        (property_name)
-        (call_expression
-          (function_name)
-          (arguments
-            (variable)
-            (binary_expression
-              (variable)
-              (integer_value
-                (unit)))))))))
-
-=================================
-While statements
-=================================
-
-@while $i < 3 {
-  background-color: lighten($base-color, $i * 5%);
-  $i: $i + 1;
-}
-
----
-
-(stylesheet
-  (while_statement
-    (binary_expression
-      (variable)
-      (integer_value))
-    (block
-      (declaration
-        (property_name)
-        (call_expression
-          (function_name)
-          (arguments
-            (variable)
-            (binary_expression
-              (variable)
-              (integer_value
-                (unit))))))
-      (declaration
-        (property_name)
-        (binary_expression
-          (variable)
-          (integer_value))))))
 
 =================================
 Functions
 =================================
 
-@function pow($base, $exponent) {
-  $result: 1;
-  @for $_ from 1 through $exponent {
-    $result: $result * $base;
-  }
-  @return $result;
+@some: foo;
+
+div {
+    margin: if((2 > 1), 0, 3px);
+    color:  if((iscolor(@some)), @some, black);
 }
 
-.sidebar {
-  float: left;
-  margin-left: pow(4, 3) * 1px;
+---
+(stylesheet
+  (declaration
+    (property_name)
+    (plain_value))
+  (rule_set
+    (selectors
+      (tag_name))
+    (block
+      (declaration
+        (property_name)
+        (call_expression
+          (function_name)
+          (arguments
+            (parenthesized_value
+              (binary_expression
+                (integer_value)
+                (integer_value)))
+            (integer_value)
+            (integer_value
+              (unit)))))
+      (declaration
+        (property_name)
+        (call_expression
+          (function_name)
+          (arguments
+            (parenthesized_value
+              (call_expression
+                (function_name)
+                (arguments
+                  (variable))))
+            (variable)
+            (plain_value)))))))
+
+==============================
+Plugin statements
+==============================
+
+@plugin "my-plugin";
+
+.el-1 {
+    @plugin "lib1";
+    value: foo();
 }
 
 ---
 
 (stylesheet
-  (function_statement
-    (identifier)
-    (parameters
-      (parameter
-        (variable))
-      (parameter
-        (variable)))
-    (block
-      (declaration
-        (property_name)
-        (integer_value))
-      (for_statement
-        (variable)
-        (integer_value)
-        (variable)
-        (block
-          (declaration
-            (property_name)
-            (binary_expression
-              (variable)
-              (variable)))))
-      (return_statement
-        (variable))))
+  (plugin_statement
+    (string_value))
   (rule_set
     (selectors
       (class_selector
         (class_name)))
     (block
+      (plugin_statement
+        (string_value))
       (declaration
         (property_name)
-        (plain_value))
-      (declaration
-        (property_name)
-        (binary_expression
-          (call_expression
-            (function_name)
-            (arguments
-              (integer_value)
-              (integer_value)))
-          (integer_value
-            (unit)))))))
-
-=================================
-Logging statements
-=================================
-
-@mixin foo {
-  @debug "debug";
-  @warn "warn";
-  @error "error";
-}
-
----
-
-(stylesheet
-  (mixin_statement
-    name: (identifier)
-    (block
-      (debug_statement
-        (string_value))
-      (warn_statement
-        (string_value))
-      (error_statement
-        (string_value)))))
+        (call_expression
+          (function_name)
+          (arguments))))))

@@ -2,8 +2,8 @@
 Universal selectors
 =========================
 
-@import './styles/reset.scss';
-@import './styles/main.scss';
+@import './styles/reset.less';
+@import './styles/main.less';
 
 #app {
   -webkit-font-smoothing: antialiased;

@@ -10,7 +10,7 @@
 const CSS = require('tree-sitter-css/grammar');
 
 module.exports = grammar(CSS, {
-  name: 'scss',
+  name: 'less',
 
   externals: ($, original) => original.concat([
     $._concat,
@@ -19,39 +19,12 @@ module.exports = grammar(CSS, {
   rules: {
     _top_level_item: ($, original) => choice(
       original,
-      $.postcss_statement,
-      $.use_statement,
-      $.forward_statement,
-      $.mixin_statement,
-      $.include_statement,
-      $.function_statement,
-      $.return_statement,
-      $.extend_statement,
-      $.error_statement,
-      $.warn_statement,
-      $.debug_statement,
-      $.at_root_statement,
-      $.if_statement,
-      $.each_statement,
-      $.for_statement,
-      $.while_statement,
+      $.plugin_statement,
     ),
 
     _block_item: ($, original) => choice(
       original,
-      $.mixin_statement,
-      $.include_statement,
-      $.function_statement,
-      $.return_statement,
-      $.extend_statement,
-      $.error_statement,
-      $.warn_statement,
-      $.debug_statement,
-      $.at_root_statement,
-      $.if_statement,
-      $.each_statement,
-      $.for_statement,
-      $.while_statement,
+      $.plugin_statement,
     ),
 
     // Selectors
@@ -59,7 +32,7 @@ module.exports = grammar(CSS, {
     _selector: ($, original) => choice(
       original,
       alias($._concatenated_identifier, $.tag_name),
-      $.placeholder,
+      // $.interpolation,
     ),
 
     class_selector: $ => prec(1, seq(
@@ -79,7 +52,7 @@ module.exports = grammar(CSS, {
 
     declaration: $ => seq(
       alias(
-        choice($.identifier, $.variable, $._concatenated_identifier),
+        choice($.identifier, $.variable, $._concatenated_identifier, $.at_keyword),
         $.property_name,
       ),
       ':',
@@ -108,42 +81,6 @@ module.exports = grammar(CSS, {
       $.variable,
     ),
 
-    use_statement: $ => seq('@use', $._value, ';'),
-
-    forward_statement: $ => seq('@forward', $._value, ';'),
-
-    mixin_statement: $ => seq(
-      '@mixin',
-      field('name', $.identifier),
-      optional($.parameters),
-      $.block,
-    ),
-
-    include_statement: $ => seq(
-      '@include',
-      $.identifier,
-      optional(alias($._include_arguments, $.arguments)),
-      choice($.block, ';'),
-    ),
-
-    _include_arguments: $ => seq(
-      token.immediate('('),
-      sep1(',', alias($._include_argument, $.argument)),
-      token.immediate(')'),
-    ),
-
-    _include_argument: $ => seq(
-      optional(seq(field('name', $.variable), ':')),
-      field('value', $._value),
-    ),
-
-    function_statement: $ => seq(
-      '@function',
-      field('name', $.identifier),
-      optional($.parameters),
-      $.block,
-    ),
-
     parameters: $ => seq('(', sep1(',', $.parameter), ')'),
 
     parameter: $ => seq(
@@ -154,55 +91,15 @@ module.exports = grammar(CSS, {
       )),
     ),
 
-    return_statement: $ => seq('@return', $._value, ';'),
+    plugin_statement: $ => seq('@plugin', $._value, ';'),
 
-    extend_statement: $ => seq('@extend', choice($._value, $.class_selector), ';'),
-
-    error_statement: $ => seq('@error', $._value, ';'),
-
-    warn_statement: $ => seq('@warn', $._value, ';'),
-
-    debug_statement: $ => seq('@debug', $._value, ';'),
-
-    at_root_statement: $ => seq('@at-root', $._value, $.block),
-
-    if_statement: $ => seq(
-      '@if',
-      field('condition', $._value),
-      $.block,
-      repeat($.else_if_clause),
-      optional($.else_clause),
-    ),
-
-    else_if_clause: $ => seq(
-      '@else',
-      'if',
-      field('condition', $._value),
-      $.block,
-    ),
-
-    else_clause: $ => seq('@else', $.block),
-
-    each_statement: $ => seq(
-      '@each',
-      optional(seq(field('key', $.variable), ',')),
-      field('value', $.variable),
-      'in',
+    import_statement: $ => seq(
+      '@import',
+      optional($._value),
       $._value,
-      $.block,
+      sep(',', $._query),
+      ';',
     ),
-
-    for_statement: $ => seq(
-      '@for',
-      $.variable,
-      'from',
-      field('from', $._value),
-      'through',
-      field('through', $._value),
-      $.block,
-    ),
-
-    while_statement: $ => seq('@while', $._value, $.block),
 
     call_expression: $ => seq(
       alias(choice($.identifier, $.plain_value), $.function_name),
@@ -221,9 +118,7 @@ module.exports = grammar(CSS, {
       ')',
     ),
 
-    interpolation: $ => seq('#{', $._value, '}'),
-
-    placeholder: $ => seq('%', $.identifier),
+    interpolation: $ => seq('@{', $._value, '}'),
 
     _concatenated_identifier: $ => choice(
       seq(
@@ -242,10 +137,23 @@ module.exports = grammar(CSS, {
       ),
     ),
 
-    variable: _ => /([a-zA-Z_]+\.)?\$[a-zA-Z-_][a-zA-Z0-9-_]*/,
+    variable: _ => /([a-zA-Z_]+\.)?@[a-zA-Z-_][a-zA-Z0-9-_]*/,
   },
 });
 
+/**
+ * Creates a rule to optionally match one or more of the rules separated by `separator`
+ *
+ * @param {RuleOrLiteral} separator
+ *
+ * @param {RuleOrLiteral} rule
+ *
+ * @return {ChoiceRule}
+ *
+ */
+function sep(separator, rule) {
+  return optional(sep1(separator, rule));
+}
 /**
  * Creates a rule to match one or more of the rules separated by `separator`
  *
