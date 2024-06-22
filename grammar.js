@@ -80,6 +80,8 @@ module.exports = grammar(CSS, {
 
     _value: ($, original) => choice(
       original,
+      $.value_value,
+      $.property_value,
       prec(-1, choice(
         $.nesting_selector,
         $._concatenated_identifier,
@@ -151,6 +153,10 @@ module.exports = grammar(CSS, {
     ),
 
     _mixin_name: $ => /[.#][a-zA-Z0-9-_]+/,
+
+    property_value: $ => seq('$', alias($.identifier, $.property_name)),
+
+    value_value: $ => seq('@@', alias($.identifier, $.property_name)),
 
     variable: _ => /([a-zA-Z_]+\.)?@[a-zA-Z-_][a-zA-Z0-9-_]*/,
   },

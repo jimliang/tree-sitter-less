@@ -1556,6 +1556,14 @@
           }
         },
         {
+          "type": "SYMBOL",
+          "name": "value_value"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "property_value"
+        },
+        {
           "type": "PREC",
           "value": -1,
           "content": {
@@ -2364,6 +2372,42 @@
     "_mixin_name": {
       "type": "PATTERN",
       "value": "[.#][a-zA-Z0-9-_]+"
+    },
+    "property_value": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "$"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          },
+          "named": true,
+          "value": "property_name"
+        }
+      ]
+    },
+    "value_value": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "@@"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          },
+          "named": true,
+          "value": "property_name"
+        }
+      ]
     },
     "variable": {
       "type": "PATTERN",

@@ -11,10 +11,6 @@
   "<="
 ] @operator
 
-(function_statement
-  (parameters
-    (parameter) @variable.parameter))
-
 (plain_value) @string
 
 (keyword_query) @function
@@ -22,8 +18,6 @@
 (identifier) @variable
 
 (variable) @variable
-
-(argument) @variable.parameter
 
 (arguments
   (variable) @variable.parameter)
