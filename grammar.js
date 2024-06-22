@@ -32,14 +32,21 @@ module.exports = grammar(CSS, {
     _selector: ($, original) => choice(
       original,
       alias($._concatenated_identifier, $.tag_name),
-      // $.interpolation,
     ),
 
     class_selector: $ => prec(1, seq(
       optional($._selector),
       choice('.', $.nesting_selector),
       alias(choice($.identifier, $._concatenated_identifier), $.class_name),
+      optional($.parameters), // mixin
     )),
+
+    id_selector: $ => seq(
+      optional($._selector),
+      '#',
+      alias($.identifier, $.id_name),
+      optional($.parameters), // mixin
+    ),
 
     pseudo_class_selector: $ => seq(
       optional($._selector),
@@ -101,6 +108,12 @@ module.exports = grammar(CSS, {
       ';',
     ),
 
+    // mixin_expression: $ => seq(
+    //   alias($._mixin_name, $.function_name),
+    //   optional($.arguments),
+    //   ';',
+    // ),
+
     call_expression: $ => seq(
       alias(choice($.identifier, $.plain_value), $.function_name),
       $.arguments,
@@ -136,6 +149,8 @@ module.exports = grammar(CSS, {
         )),
       ),
     ),
+
+    _mixin_name: $ => /[.#][a-zA-Z0-9-_]+/,
 
     variable: _ => /([a-zA-Z_]+\.)?@[a-zA-Z-_][a-zA-Z0-9-_]*/,
   },

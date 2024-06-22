@@ -10,9 +10,6 @@ Universal selectors
 }
 
 .MoreChancesModal {
-  &_Title {
-    @extend .t--heading-tertiary;
-  }
   &_Spacer {
     background: red;
   }
@@ -20,4 +17,30 @@ Universal selectors
 
 ---
 
-(stylesheet (import_statement (string_value)) (import_statement (string_value)) (rule_set (selectors (id_selector (id_name))) (block (declaration (property_name) (plain_value)))) (rule_set (selectors (class_selector (class_name))) (block (rule_set (selectors (class_selector (nesting_selector) (class_name))) (block (extend_statement (class_selector (class_name))))) (rule_set (selectors (class_selector (nesting_selector) (class_name))) (block (declaration (property_name) (plain_value)))))))
+(stylesheet
+  (import_statement
+    (string_value))
+  (import_statement
+    (string_value))
+  (rule_set
+    (selectors
+      (id_selector
+        (id_name)))
+    (block
+      (declaration
+        (property_name)
+        (plain_value))))
+  (rule_set
+    (selectors
+      (class_selector
+        (class_name)))
+    (block
+      (rule_set
+        (selectors
+          (class_selector
+            (nesting_selector)
+            (class_name)))
+        (block
+          (declaration
+            (property_name)
+            (plain_value)))))))

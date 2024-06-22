@@ -610,10 +610,6 @@
           },
           "named": true,
           "value": "tag_name"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "interpolation"
         }
       ]
     },
@@ -673,6 +669,18 @@
             },
             "named": true,
             "value": "class_name"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "parameters"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         ]
       }
@@ -812,6 +820,18 @@
           },
           "named": true,
           "value": "id_name"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "parameters"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },
@@ -2340,6 +2360,10 @@
           ]
         }
       ]
+    },
+    "_mixin_name": {
+      "type": "PATTERN",
+      "value": "[.#][a-zA-Z0-9-_]+"
     },
     "variable": {
       "type": "PATTERN",

@@ -1,28 +1,6 @@
 [
-  "@at-root"
-  "@debug"
-  "@error"
-  "@extend"
-  "@forward"
-  "@mixin"
-  "@use"
-  "@warn"
+  "@import"
 ] @keyword
-
-"@function" @keyword.function
-
-"@return" @keyword.return
-
-"@include" @keyword.import
-
-[
-  "@while"
-  "@each"
-  "@for"
-  "from"
-  "through"
-  "in"
-] @keyword.repeat
 
 (js_comment) @comment @spell
 
@@ -32,16 +10,6 @@
   ">="
   "<="
 ] @operator
-
-(mixin_statement
-  name: (identifier) @function)
-
-(mixin_statement
-  (parameters
-    (parameter) @variable.parameter))
-
-(function_statement
-  name: (identifier) @function)
 
 (function_statement
   (parameters
@@ -65,5 +33,5 @@
   "]"
 ] @punctuation.bracket
 
-(include_statement
+(import_statement
   (identifier) @function)

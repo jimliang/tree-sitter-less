@@ -33,3 +33,37 @@ body {
   color: #444;
   background: url("@{images}/white-sand.png");
 }
+
+// Imports
+@themes: "../../src/themes";
+
+@import "@{themes}/tidal-wave.less";
+@import (once) "foo.less";
+
+// Properties
+@property: color;
+
+.widget {
+  @{property}: #0ee;
+  background-@{property}: #999;
+}
+
+
+// Variable Variables
+@primary:  green;
+@secondary: blue;
+
+.section {
+  @color: primary;
+
+  .element {
+    color: @@color;
+  }
+}
+
+// Properties as Variables
+
+.widget {
+  color: #efefef;
+  background-color: $color;
+}

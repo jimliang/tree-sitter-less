@@ -317,46 +317,6 @@ html {
           (arguments
             (plain_value)))))))
 
-==============================
-Use statements
-==============================
-
-@use 'custom.css';
-
-.inverse {
-  background-color: base.$primary-color;
-  color: white;
-}
-
----
-
-(stylesheet
-  (use_statement
-    (string_value))
-  (rule_set
-    (selectors
-      (class_selector
-        (class_name)))
-    (block
-      (declaration
-        (property_name)
-        (plain_value))
-      (declaration
-        (property_name)
-        (plain_value)))))
-
-==============================
-Forward statements
-==============================
-
-@forward 'custom.css';
-
----
-
-(stylesheet
-  (forward_statement
-    (string_value)))
-
 =================================
 Operators
 =================================
@@ -391,32 +351,27 @@ Interpolation
 =================================
 
 
-@variable: .bucket;
-@{variable} {
+@variable: bucket;
+.@{variable} {
   color: blue;
 }
 
 
 ---
-
 (stylesheet
+  (declaration
+    (property_name)
+    (plain_value))
   (rule_set
     (selectors
       (class_selector
         (class_name
-          (identifier)
           (interpolation
-            (variable)))))
+            (plain_value)))))
     (block
       (declaration
         (property_name)
-        (plain_value))
-      (declaration
-        (property_name
-          (interpolation
-            (variable)))
-        (integer_value)))))
-
+        (plain_value)))))
 
 =================================
 Functions
