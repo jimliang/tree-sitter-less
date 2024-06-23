@@ -1,0 +1,34 @@
+
+// If
+@some: foo;
+@bg-light: boolean(luma(@bg) > 50%);
+
+div {
+    margin: if((2 > 1), 0, 3px);
+    color:  if((iscolor(@some)), @some, black);
+}
+
+// List
+@list: "banana", "tomato", "potato", "peach";
+n: length(@list);
+m: extract(@list, 3);
+ra: range(10px, 30px, 10);
+
+// Each
+@selectors: blue, green, red;
+
+each(@selectors, {
+  .sel-@{value} {
+    a: b;
+  }
+});
+
+// Types
+@a: isnumber(#ff0);
+@b: isnumber(blue);
+@c: isnumber("string");
+@d: isnumber(1234);
+@f: isnumber(56px);
+@g: isnumber(7.8%);
+@h: isnumber(keyword);
+@i: isnumber(url("aaaaaa"));

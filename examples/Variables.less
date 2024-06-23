@@ -21,7 +21,7 @@ a:hover {
 
 .@{my-selector} {
   font-weight: bold;
-  line-height: 40px;
+  line-height: 1 + 2px;
   margin: 0 auto;
 }
 
@@ -33,12 +33,6 @@ body {
   color: #444;
   background: url("@{images}/white-sand.png");
 }
-
-// Imports
-@themes: "../../src/themes";
-
-@import "@{themes}/tidal-wave.less";
-@import (once) "foo.less";
 
 // Properties
 @property: color;
@@ -55,6 +49,8 @@ body {
 
 .section {
   @color: primary;
+  wwidth: 39px;
+
 
   .element {
     color: @@color;

@@ -1,6 +1,6 @@
 /**
- * @file SCSS grammar for tree-sitter
- * @author Amaan Qureshi <amaanq12@gmail.com>
+ * @file LESS grammar for tree-sitter
+ * @author jimliang <769925821@qq.com>
  * @license MIT
  */
 
@@ -109,12 +109,6 @@ module.exports = grammar(CSS, {
       sep(',', $._query),
       ';',
     ),
-
-    // mixin_expression: $ => seq(
-    //   alias($._mixin_name, $.function_name),
-    //   optional($.arguments),
-    //   ';',
-    // ),
 
     call_expression: $ => seq(
       alias(choice($.identifier, $.plain_value), $.function_name),

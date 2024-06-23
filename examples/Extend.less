@@ -1,0 +1,21 @@
+
+nav ul {
+  &:extend(.inline);
+  background: blue;
+}
+
+.big-division,
+.big-bag :extend(div pre),
+.big-bucket:extend(.bucket) {
+  // body
+}
+
+.some-class:extend(@{variable}) {}
+
+
+@media print {
+  .screenClass:extend(.selector) {}
+  .selector {
+    color: black;
+  }
+}

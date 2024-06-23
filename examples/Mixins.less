@@ -1,0 +1,63 @@
+// Parametric
+.average(@x, @y) {
+  @average: ((@x + @y) / 2);
+}
+
+div {
+  .average(16px, 50px);
+  padding: @average;
+}
+
+// Namesspaces
+
+#outer() {
+  .inner {
+    color: red;
+  }
+}
+
+.c {
+  #outer.inner();
+}
+// Guarded Namespaces
+
+#namespace when (@mode = huge) {
+  .mixin() { /* */ }
+}
+
+#namespace {
+  .mixin() when (@mode = huge) { /* */ }
+}
+
+// !important keyword
+
+.foo (@bg: #f5f5f5, @color: #900) {
+  background: @bg;
+  color: @color;
+}
+.important {
+  .foo() !important;
+}
+
+// @arguments Variable
+.box-shadow(@x: 0, @y: 0, @blur: 1px, @color: #000) {
+  -webkit-box-shadow: @arguments;
+     -moz-box-shadow: @arguments;
+          box-shadow: @arguments;
+}
+// rest
+.mixin(@a, @rest...) {
+   // @rest is bound to arguments after @a
+   // @arguments is bound to all arguments
+}
+
+
+// Property / value accessors
+.average(@x, @y) {
+  @result: ((@x + @y) / 2);
+}
+
+div {
+  // call a mixin and look up its "@result" value
+  padding: .average(16px, 50px)[@result];
+}
