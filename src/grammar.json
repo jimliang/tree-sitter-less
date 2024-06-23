@@ -1205,6 +1205,18 @@
           "value": "property_name"
         },
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_pending_identifier"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "STRING",
           "value": ":"
         },
@@ -2412,6 +2424,10 @@
     "variable": {
       "type": "PATTERN",
       "value": "([a-zA-Z_]+\\.)?@[a-zA-Z-_][a-zA-Z0-9-_]*"
+    },
+    "_pending_identifier": {
+      "type": "PATTERN",
+      "value": "\\+\\_?"
     }
   },
   "extras": [

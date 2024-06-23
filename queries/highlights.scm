@@ -1,5 +1,8 @@
 [
   "@import"
+  "@document"
+  "@namespace"
+  "@charset"
 ] @keyword
 
 (js_comment) @comment @spell

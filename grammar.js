@@ -62,6 +62,7 @@ module.exports = grammar(CSS, {
         choice($.identifier, $.variable, $._concatenated_identifier, $.at_keyword),
         $.property_name,
       ),
+      optional($._pending_identifier),
       ':',
       $._value,
       repeat(seq(optional(','), $._value)),
@@ -153,6 +154,7 @@ module.exports = grammar(CSS, {
     value_value: $ => seq('@@', alias($.identifier, $.property_name)),
 
     variable: _ => /([a-zA-Z_]+\.)?@[a-zA-Z-_][a-zA-Z0-9-_]*/,
+    _pending_identifier: _ => /\+\_?/,
   },
 });
 
