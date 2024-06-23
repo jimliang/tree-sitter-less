@@ -62,7 +62,7 @@ module.exports = grammar(CSS, {
         choice($.identifier, $.variable, $._concatenated_identifier, $.at_keyword),
         $.property_name,
       ),
-      optional($._pending_identifier),
+      optional(alias($._pending_identifier, $.identifier)),
       ':',
       $._value,
       repeat(seq(optional(','), $._value)),

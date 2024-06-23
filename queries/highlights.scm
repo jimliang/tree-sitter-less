@@ -1,6 +1,5 @@
 [
   "@import"
-  "@document"
   "@namespace"
   "@charset"
 ] @keyword

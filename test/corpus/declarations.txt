@@ -453,6 +453,31 @@ Variable Interpolation
         (property_name)
         (plain_value)))))
 
+=================================
+Property Interpolation
+=================================
+.widget {
+  @{property}: #0ee;
+  background-@{property}: #999;
+}
+---
+(stylesheet
+  (rule_set
+    (selectors
+      (class_selector
+        (class_name)))
+    (block
+      (declaration
+        (property_name
+          (interpolation
+            (plain_value)))
+        (color_value))
+      (declaration
+        (property_name
+          (identifier)
+          (interpolation
+            (plain_value)))
+        (color_value)))))
 
 =============================================
 Spaces after colons in property declarations

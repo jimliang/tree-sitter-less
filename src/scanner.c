@@ -29,9 +29,9 @@ bool tree_sitter_less_external_scanner_scan(void *payload, TSLexer *lexer, const
     }
 
     if (valid_symbols[CONCAT]) {
-        if (iswalnum(lexer->lookahead) || lexer->lookahead == '#' || lexer->lookahead == '-') {
+        if (iswalnum(lexer->lookahead) || lexer->lookahead == '@' || lexer->lookahead == '-') {
             lexer->result_symbol = CONCAT;
-            if (lexer->lookahead == '#') {
+            if (lexer->lookahead == '@') {
                 lexer->mark_end(lexer);
                 advance(lexer);
                 return lexer->lookahead == '{';
