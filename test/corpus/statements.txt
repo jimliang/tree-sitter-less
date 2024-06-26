@@ -446,3 +446,72 @@ Plugin statements
         (call_expression
           (function_name)
           (arguments))))))
+
+=================================
+Mixins with no arguments
+=================================
+
+.mixin-class {
+  .a();
+  .a;
+}
+
+---
+(stylesheet
+  (rule_set
+    (selectors
+      (class_selector
+        (class_name)))
+    (block
+      (mixin_statement
+        (function_name
+          (class_name))
+        (arguments))
+      (mixin_statement
+        (function_name
+          (class_name))))))
+
+=================================
+Mixins with arguments
+=================================
+.myclass {
+  .mixin(4px, red);
+}
+---
+(stylesheet
+  (rule_set
+    (selectors
+      (class_selector
+        (class_name)))
+    (block
+      (mixin_statement
+        (function_name
+          (class_name))
+        (arguments
+          (integer_value
+            (unit))
+          (plain_value))))))
+
+=================================
+Mixins Definition with arguments
+=================================
+.average(@x, @y) {
+  @average: ((@x + @y) / 2);
+}
+---
+(stylesheet
+  (mixin_definition
+    (class_name)
+    (arguments
+      (variable)
+      (variable))
+    (block
+      (declaration
+        (property_name)
+        (parenthesized_value
+          (binary_expression
+            (parenthesized_value
+              (binary_expression
+                (variable)
+                (variable)))
+            (integer_value)))))))

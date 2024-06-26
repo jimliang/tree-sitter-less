@@ -589,6 +589,14 @@
           "named": true
         },
         {
+          "type": "mixin_definition",
+          "named": true
+        },
+        {
+          "type": "mixin_statement",
+          "named": true
+        },
+        {
           "type": "namespace_statement",
           "named": true
         },
@@ -837,10 +845,6 @@
         },
         {
           "type": "nesting_selector",
-          "named": true
-        },
-        {
-          "type": "parameters",
           "named": true
         },
         {
@@ -1124,6 +1128,25 @@
     }
   },
   {
+    "type": "function_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "class_name",
+          "named": true
+        },
+        {
+          "type": "id_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "grid_value",
     "named": true,
     "fields": {},
@@ -1244,10 +1267,6 @@
         },
         {
           "type": "nesting_selector",
-          "named": true
-        },
-        {
-          "type": "parameters",
           "named": true
         },
         {
@@ -1662,6 +1681,52 @@
     }
   },
   {
+    "type": "mixin_definition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "arguments",
+          "named": true
+        },
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "class_name",
+          "named": true
+        },
+        {
+          "type": "id_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "mixin_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "arguments",
+          "named": true
+        },
+        {
+          "type": "function_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "namespace_selector",
     "named": true,
     "fields": {},
@@ -1836,21 +1901,6 @@
       "types": [
         {
           "type": "variable",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "parameters",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "parameter",
           "named": true
         }
       ]
@@ -2574,6 +2624,10 @@
           "named": true
         },
         {
+          "type": "mixin_definition",
+          "named": true
+        },
+        {
           "type": "namespace_statement",
           "named": true
         },
@@ -2875,10 +2929,6 @@
   },
   {
     "type": "from",
-    "named": true
-  },
-  {
-    "type": "function_name",
     "named": true
   },
   {

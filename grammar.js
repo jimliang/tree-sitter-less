@@ -24,12 +24,14 @@ module.exports = grammar(CSS, {
     _top_level_item: ($, original) => choice(
       original,
       $.plugin_statement,
+      $.mixin_definition,
     ),
 
     _block_item: ($, original) => choice(
       original,
       $.plugin_statement,
-      $.mixin_statement
+      $.mixin_statement,
+      $.mixin_definition
     ),
 
     // Selectors
@@ -71,6 +73,12 @@ module.exports = grammar(CSS, {
       repeat(seq(optional(','), $._value)),
       optional($.important),
       ';',
+    ),
+
+    mixin_definition: $ => seq(
+      $._mixin_name,
+      $.arguments,
+      $.block,
     ),
 
     // Media queries
