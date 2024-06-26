@@ -16,6 +16,10 @@ module.exports = grammar(CSS, {
     $._concat,
   ]),
 
+  conflicts: $ => [
+    [$.id_selector, $._mixin_name]
+  ],
+
   rules: {
     _top_level_item: ($, original) => choice(
       original,
@@ -25,6 +29,7 @@ module.exports = grammar(CSS, {
     _block_item: ($, original) => choice(
       original,
       $.plugin_statement,
+      $.mixin_statement
     ),
 
     // Selectors
@@ -38,14 +43,12 @@ module.exports = grammar(CSS, {
       optional($._selector),
       choice('.', $.nesting_selector),
       alias(choice($.identifier, $._concatenated_identifier), $.class_name),
-      optional($.parameters), // mixin
     )),
 
     id_selector: $ => seq(
       optional($._selector),
       '#',
       alias($.identifier, $.id_name),
-      optional($.parameters), // mixin
     ),
 
     pseudo_class_selector: $ => seq(
@@ -101,6 +104,20 @@ module.exports = grammar(CSS, {
       )),
     ),
 
+    // mixnin
+    mixin_statement: $ => seq(
+      alias($._mixin_name, $.function_name),
+      alias(
+        seq(
+          token.immediate('('),
+          sep(choice(',', ';'), repeat1($._value)),
+          ')',
+        ),
+        $.parameters
+      ),
+      ';',
+    ),
+
     plugin_statement: $ => seq('@plugin', $._value, ';'),
 
     import_statement: $ => seq(
@@ -147,7 +164,15 @@ module.exports = grammar(CSS, {
       ),
     ),
 
-    _mixin_name: $ => /[.#][a-zA-Z0-9-_]+/,
+    _mixin_name: $ => seq(
+      // namespace
+      optional(
+        seq('#', alias($.identifier, $.id_name)
+        ),
+      ),
+      '.',
+      alias($.identifier, $.class_name),
+    ),
 
     property_value: $ => seq('$', alias($.identifier, $.property_name)),
 
