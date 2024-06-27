@@ -116,6 +116,7 @@ module.exports = grammar(CSS, {
     mixin_statement: $ => seq(
       alias($._mixin_name, $.function_name),
       optional($.arguments),
+      optional($.important),
       ';',
     ),
 
