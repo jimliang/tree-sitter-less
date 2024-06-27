@@ -1689,10 +1689,6 @@
       "required": true,
       "types": [
         {
-          "type": "arguments",
-          "named": true
-        },
-        {
           "type": "block",
           "named": true
         },
@@ -1702,6 +1698,14 @@
         },
         {
           "type": "id_name",
+          "named": true
+        },
+        {
+          "type": "parameters",
+          "named": true
+        },
+        {
+          "type": "when_condition",
           "named": true
         }
       ]
@@ -1721,6 +1725,10 @@
         },
         {
           "type": "function_name",
+          "named": true
+        },
+        {
+          "type": "important",
           "named": true
         }
       ]
@@ -1896,11 +1904,90 @@
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "color_value",
+          "named": true
+        },
+        {
+          "type": "float_value",
+          "named": true
+        },
+        {
+          "type": "grid_value",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "important",
+          "named": true
+        },
+        {
+          "type": "integer_value",
+          "named": true
+        },
+        {
+          "type": "interpolation",
+          "named": true
+        },
+        {
+          "type": "list_value",
+          "named": true
+        },
+        {
+          "type": "nesting_selector",
+          "named": true
+        },
+        {
+          "type": "parenthesized_value",
+          "named": true
+        },
+        {
+          "type": "plain_value",
+          "named": true
+        },
+        {
+          "type": "property_value",
+          "named": true
+        },
+        {
+          "type": "string_value",
+          "named": true
+        },
+        {
+          "type": "value_value",
+          "named": true
+        },
+        {
           "type": "variable",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "parameters",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "parameter",
           "named": true
         }
       ]
@@ -2768,6 +2855,21 @@
     }
   },
   {
+    "type": "when_condition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "binary_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "!=",
     "named": false
   },
@@ -2785,6 +2887,10 @@
   },
   {
     "type": "$=",
+    "named": false
+  },
+  {
+    "type": "${",
     "named": false
   },
   {
@@ -2994,6 +3100,10 @@
   {
     "type": "variable",
     "named": true
+  },
+  {
+    "type": "when",
+    "named": false
   },
   {
     "type": "{",

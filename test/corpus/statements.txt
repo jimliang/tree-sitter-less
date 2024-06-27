@@ -502,9 +502,11 @@ Mixins Definition with arguments
 (stylesheet
   (mixin_definition
     (class_name)
-    (arguments
-      (variable)
-      (variable))
+    (parameters
+      (parameter
+        (variable))
+      (parameter
+        (variable)))
     (block
       (declaration
         (property_name)
@@ -515,3 +517,29 @@ Mixins Definition with arguments
                 (variable)
                 (variable)))
             (integer_value)))))))
+
+=================================
+Mixins Definition with when condition
+=================================
+.mixin(@a) when (lightness(@a) >= 50%) {
+  background-color: black;
+}
+---
+(stylesheet
+  (mixin_definition
+    (class_name)
+    (parameters
+      (parameter
+        (variable)))
+    (when_condition
+      (binary_expression
+        (call_expression
+          (function_name)
+          (arguments
+            (variable)))
+        (integer_value
+          (unit))))
+    (block
+      (declaration
+        (property_name)
+        (plain_value)))))

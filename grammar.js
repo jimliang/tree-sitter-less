@@ -77,7 +77,8 @@ module.exports = grammar(CSS, {
 
     mixin_definition: $ => seq(
       $._mixin_name,
-      $.arguments,
+      $.parameters,
+      optional($.when_condition),
       $.block,
     ),
 
@@ -102,10 +103,10 @@ module.exports = grammar(CSS, {
       $.variable,
     ),
 
-    parameters: $ => seq('(', sep1(',', $.parameter), ')'),
+    parameters: $ => seq('(', sep(',', $.parameter), ')'),
 
     parameter: $ => seq(
-      $.variable,
+      $._value,
       optional(seq(
         ':',
         field('default', $._value),
@@ -140,6 +141,13 @@ module.exports = grammar(CSS, {
       choice('+', '-', '*', '/', '==', '<', '>', '!=', '<=', '>='),
       $._value,
     )),
+
+    when_condition: $ => seq(
+      'when',
+      '(',
+      $.binary_expression,
+      ')',
+    ),
 
     list_value: $ => seq(
       '(',
@@ -177,7 +185,10 @@ module.exports = grammar(CSS, {
       alias($.identifier, $.class_name),
     ),
 
-    property_value: $ => seq('$', alias($.identifier, $.property_name)),
+    property_value: $ => choice(
+      seq('$', alias($.identifier, $.property_name)),
+      seq('${', alias($.identifier, $.property_name), '}'),
+    ),
 
     value_value: $ => seq('@@', alias($.identifier, $.property_name)),
 
