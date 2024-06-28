@@ -25,13 +25,16 @@ module.exports = grammar(CSS, {
       original,
       $.plugin_statement,
       $.mixin_definition,
+      $.each_statement,
     ),
 
     _block_item: ($, original) => choice(
       original,
       $.plugin_statement,
       $.mixin_statement,
-      $.mixin_definition
+      $.mixin_definition,
+      $.extend_statement,
+      $.each_statement,
     ),
 
     // Selectors
@@ -103,7 +106,7 @@ module.exports = grammar(CSS, {
       $.variable,
     ),
 
-    parameters: $ => seq('(', sep(',', $.parameter), ')'),
+    parameters: $ => seq('(', sep(',', choice($.parameter, $.rest_parameter)), ')'),
 
     parameter: $ => seq(
       $._value,
@@ -113,12 +116,34 @@ module.exports = grammar(CSS, {
       )),
     ),
 
+    rest_parameter: $ => seq(optional($.variable), '...'),
+
+    each_statement: $ => seq(
+      'each',
+      '(',
+      $._value,
+      ',',
+      $.block,
+      ')',
+      ';'
+    ),
+
     // mixnin
     mixin_statement: $ => seq(
       alias($._mixin_name, $.function_name),
       optional($.arguments),
       optional($.important),
       ';',
+    ),
+
+    extend_statement: $ => seq(
+      $._selector,
+      ':extend',
+      alias(
+        $._extend_arguments,
+        $.arguments,
+      ),
+      ';'
     ),
 
     plugin_statement: $ => seq('@plugin', $._value, ';'),
@@ -173,6 +198,12 @@ module.exports = grammar(CSS, {
         )),
       ),
     ),
+
+    _extend_arguments: $ =>
+      seq('(',
+        $._selector,
+        ')'
+      ),
 
     _mixin_name: $ => seq(
       // namespace
