@@ -13,3 +13,26 @@ Rule sets
     (selectors (id_selector (id_name)))
     (block
       (declaration (property_name) (integer_value (unit))))))
+
+============================
+Merge Properties
+============================
+transform+_: scale(2);
+transform+: scale(2,4);
+---
+(stylesheet
+  (declaration
+    (property_name)
+    (merge_identifier)
+    (call_expression
+      (function_name)
+      (arguments
+        (integer_value))))
+  (declaration
+    (property_name)
+    (merge_identifier)
+    (call_expression
+      (function_name)
+      (arguments
+        (integer_value)
+        (integer_value)))))

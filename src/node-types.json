@@ -936,6 +936,10 @@
           "named": true
         },
         {
+          "type": "merge_identifier",
+          "named": true
+        },
+        {
           "type": "nesting_selector",
           "named": true
         },
@@ -1841,6 +1845,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "merge_identifier",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "mixin_definition",
@@ -3100,6 +3109,10 @@
   },
   {
     "type": "+",
+    "named": false
+  },
+  {
+    "type": "+_",
     "named": false
   },
   {

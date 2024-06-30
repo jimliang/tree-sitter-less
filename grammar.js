@@ -65,18 +65,18 @@ module.exports = grammar(CSS, {
 
     // Declarations
 
-    declaration: $ => seq(
+    declaration: $ => prec(1, seq(
       alias(
         choice($.identifier, $.variable, $._concatenated_identifier, $.at_keyword),
         $.property_name,
       ),
-      optional(alias($._pending_identifier, $.identifier)),
+      optional($.merge_identifier),
       ':',
       $._value,
       repeat(seq(optional(','), $._value)),
       optional($.important),
       ';',
-    ),
+    )),
 
     mixin_definition: $ => seq(
       $._mixin_name,
@@ -224,7 +224,8 @@ module.exports = grammar(CSS, {
     value_value: $ => seq('@@', alias($.identifier, $.property_name)),
 
     variable: _ => /([a-zA-Z_]+\.)?@[a-zA-Z-_][a-zA-Z0-9-_]*/,
-    _pending_identifier: _ => /\+\_?/,
+
+    merge_identifier: _ => choice('+', '+_'),
   },
 });
 
