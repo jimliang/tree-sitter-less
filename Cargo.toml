@@ -1,12 +1,12 @@
 [package]
-name = "tree-sitter-scss"
-description = "SCSS grammar for tree-sitter"
+name = "tree-sitter-less"
+description = "LESS grammar for tree-sitter"
 version = "1.0.0"
-authors = ["Amaan Qureshi <amaanq12@gmail.com>"]
+authors = ["Jimliang <jimlianglinux@gmail.com>"]
 license = "MIT"
-keywords = ["incremental", "parsing", "tree-sitter", "scss"]
+keywords = ["incremental", "parsing", "tree-sitter", "less"]
 categories = ["parsing", "text-editors"]
-repository = "https://github.com/tree-sitter-grammars/tree-sitter-scss"
+repository = "https://github.com/jimliang/tree-sitter-less"
 edition = "2021"
 autoexamples = false
 

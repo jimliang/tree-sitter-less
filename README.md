@@ -1,7 +1,6 @@
 # tree-sitter-less
 
 [![CI][ci]](https://github.com/jimliang/tree-sitter-less/actions/workflows/ci.yml)
-[![matrix][matrix]](https://matrix.to/#/#tree-sitter-chat:matrix.org)
 [![crates][crates]](https://crates.io/crates/tree-sitter-less)
 [![npm][npm]](https://www.npmjs.com/package/tree-sitter-less)
 [![pypi][pypi]](https://pypi.org/project/tree-sitter-less)
