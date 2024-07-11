@@ -14,7 +14,7 @@ classifiers = [
   "Topic :: Text Processing :: Linguistic",
   "Typing :: Typed",
 ]
-authors = [{ name = "Jimliang", email = "jimliang@769925821@qq.com" }]
+authors = [{ name = "Jimliang", email = "jimlianglinux@gmail.com" }]
 requires-python = ">=3.8"
 license.text = "MIT"
 readme = "README.md"
