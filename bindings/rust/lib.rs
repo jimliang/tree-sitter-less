@@ -5,7 +5,7 @@
 //!
 //! ```
 //! let code = r#"
-//! $blue: #056ef0;
+//! @blue: #056ef0;
 //! "#;
 //! let mut parser = tree_sitter::Parser::new();
 //! parser.set_language(&tree_sitter_less::language()).expect("Error loading LESS grammar");
