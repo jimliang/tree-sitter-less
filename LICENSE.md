@@ -1,5 +1,6 @@
 The MIT License (MIT)
 
+Copyright (c) 2024 Amaan Qureshi <amaanq12@gmail.com>
 Copyright (c) 2024 Jim Liang <769925821@qq.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
